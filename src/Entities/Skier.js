@@ -1,6 +1,11 @@
 import * as Constants from "../Constants";
 import { Entity } from "./Entity";
 import { intersectTwoRects, Rect } from "../Core/Utils";
+import { Crashed } from "./SkierStates/Crashed";
+import { Jumping } from "./SkierStates/Jumping";
+import { Moving } from "./SkierStates/Moving";
+import { Standing } from "./SkierStates/Standing";
+import { Ramping } from "./SkierStates/Ramping";
 
 export class Skier extends Entity {
     assetName = Constants.SKIER_DOWN;
@@ -10,6 +15,16 @@ export class Skier extends Entity {
 
     constructor(x, y) {
         super(x, y);
+
+        this.states = {
+            [Constants.SKIER_STATES.CRASHED]: new Crashed(this),
+            [Constants.SKIER_STATES.JUMPING]: new Jumping(this),
+            [Constants.SKIER_STATES.MOVING]: new Moving(this),
+            [Constants.SKIER_STATES.RAMPING]: new Ramping(this),
+            [Constants.SKIER_STATES.STANDING]: new Standing(this)
+        };
+
+        this.setState(Constants.SKIER_STATES.STANDING);
     }
 
     setDirection(direction) {
@@ -17,11 +32,20 @@ export class Skier extends Entity {
         this.updateAsset();
     }
 
-    updateAsset() {
-        this.assetName = Constants.SKIER_DIRECTION_ASSET[this.direction];
+    updateAsset(asset) {
+        this.assetName = asset || Constants.SKIER_DIRECTION_ASSET[this.direction];
     }
 
-    move() {
+    setState(key) {
+        const prevStateKey = this.stateKey;
+        this.stateKey = key;
+        this.state = this.states[key];
+        this.state.enter(prevStateKey);
+    }
+
+    tick() {
+        this.state.tick();
+
         switch(this.direction) {
             case Constants.SKIER_DIRECTIONS.LEFT_DOWN:
                 this.moveSkierLeftDown();
@@ -40,17 +64,17 @@ export class Skier extends Entity {
     }
 
     moveSkierLeftDown() {
-        this.x -= this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
-        this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
+        this.x -= this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER / this.state.speedModifier;
+        this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER / this.state.speedModifier;
     }
 
     moveSkierDown() {
-        this.y += this.speed;
+        this.y += this.speed / this.state.speedModifier;
     }
 
     moveSkierRightDown() {
-        this.x += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
-        this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
+        this.x += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER / this.state.speedModifier;
+        this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER / this.state.speedModifier;
     }
 
     moveSkierRight() {
@@ -61,32 +85,24 @@ export class Skier extends Entity {
         this.y -= Constants.SKIER_STARTING_SPEED;
     }
 
-    turnLeft() {
-        if(this.direction === Constants.SKIER_DIRECTIONS.LEFT) {
-            this.moveSkierLeft();
-        }
-        else {
-            this.setDirection(this.direction - 1);
-        }
+    keyLeft() {
+        return this.state.left && this.state.left();
     }
 
-    turnRight() {
-        if(this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
-            this.moveSkierRight();
-        }
-        else {
-            this.setDirection(this.direction + 1);
-        }
+    keyRight() {
+        this.state.right();
     }
 
-    turnUp() {
-        if(this.direction === Constants.SKIER_DIRECTIONS.LEFT || this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
-            this.moveSkierUp();
-        }
+    keyUp() {
+        this.state.up();
     }
 
-    turnDown() {
-        this.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
+    keyDown() {
+        this.state.down();
+    }
+
+    keySpace() {
+        this.state.space();
     }
 
     checkIfSkierHitObstacle(obstacleManager, assetManager) {
@@ -108,11 +124,12 @@ export class Skier extends Entity {
                 obstaclePosition.y
             );
 
-            return intersectTwoRects(skierBounds, obstacleBounds);
+            return intersectTwoRects(skierBounds, obstacleBounds)
+                && !(obstacle.jumpable && this.state.inTheAir);
         });
 
         if(collision) {
-            this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
+            this.setState(collision.collisionState);
         }
     };
 }

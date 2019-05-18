@@ -35,7 +35,7 @@ export class Game {
     }
 
     updateGameWindow() {
-        this.skier.move();
+        this.skier.tick();
 
         const previousGameWindow = this.gameWindow;
         this.calculateGameWindow();
@@ -63,19 +63,23 @@ export class Game {
     handleKeyDown(event) {
         switch(event.which) {
             case Constants.KEYS.LEFT:
-                this.skier.turnLeft();
+                this.skier.keyLeft();
                 event.preventDefault();
                 break;
             case Constants.KEYS.RIGHT:
-                this.skier.turnRight();
+                this.skier.keyRight();
                 event.preventDefault();
                 break;
             case Constants.KEYS.UP:
-                this.skier.turnUp();
+                this.skier.keyUp();
                 event.preventDefault();
                 break;
             case Constants.KEYS.DOWN:
-                this.skier.turnDown();
+                this.skier.keyDown();
+                event.preventDefault();
+                break;
+            case Constants.KEYS.SPACE:
+                this.skier.keySpace();
                 event.preventDefault();
                 break;
         }
