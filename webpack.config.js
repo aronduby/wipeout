@@ -32,6 +32,10 @@ const config = {
             {
                 test: /\.png$/,
                 use: ['file-loader'],
+            },
+            {
+                test: /\.mp3$/,
+                use: ['file-loader']
             }
         ]
     },

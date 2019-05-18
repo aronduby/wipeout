@@ -1,6 +1,8 @@
 export const GAME_WIDTH = window.innerWidth;
 export const GAME_HEIGHT = window.innerHeight;
 
+export const PAUSED_CLASS = 'paused';
+
 export const SKIER_CRASH = 'skierCrash';
 export const SKIER_LEFT = 'skierLeft';
 export const SKIER_LEFTDOWN = 'skierLeftDown';
@@ -17,6 +19,7 @@ export const TREE_CLUSTER = 'treeCluster';
 export const ROCK1 = 'rock1';
 export const ROCK2 = 'rock2';
 export const RAMP = 'ramp';
+export const PAUSE_MUSIC = 'pauseMusic';
 
 export const SKIER_STARTING_SPEED = 10;
 export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142;
@@ -42,6 +45,10 @@ export const ASSETS = {
     [ROCK1]: 'img/rock_1.png',
     [ROCK2]: 'img/rock_2.png',
     [RAMP]: 'img/jump_ramp.png'
+};
+
+export const AUDIO = {
+    [PAUSE_MUSIC]: 'audio/battletoads-pause-music.mp3'
 };
 
 export const SKIER_DIRECTIONS = {
@@ -80,5 +87,6 @@ export const KEYS = {
     RIGHT: 39,
     UP: 38,
     DOWN: 40,
-    SPACE: 32
+    SPACE: 32,
+    P: 80
 };

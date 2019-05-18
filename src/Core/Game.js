@@ -7,12 +7,16 @@ import { Rect } from './Utils';
 
 export class Game {
     gameWindow = null;
+    paused = false;
 
     constructor() {
         this.assetManager = new AssetManager();
         this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         this.skier = new Skier(0, 0);
         this.obstacleManager = new ObstacleManager();
+
+        this.pauseMusic = new Audio(Constants.AUDIO[Constants.PAUSE_MUSIC]);
+        this.pauseMusic.loop = true;
 
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
@@ -31,7 +35,21 @@ export class Game {
         this.updateGameWindow();
         this.drawGameWindow();
 
-        requestAnimationFrame(this.run.bind(this));
+        this.frameRequest = requestAnimationFrame(this.run.bind(this));
+    }
+
+    togglePause() {
+        if (this.paused) {
+            this.pauseMusic.pause();
+            document.body.classList.remove(Constants.PAUSED_CLASS);
+            this.run();
+        } else {
+            this.pauseMusic.play();
+            cancelAnimationFrame(this.frameRequest);
+            document.body.classList.add(Constants.PAUSED_CLASS);
+        }
+
+        this.paused = !this.paused;
     }
 
     updateGameWindow() {
@@ -61,7 +79,15 @@ export class Game {
     }
 
     handleKeyDown(event) {
+        if (this.paused && event.which !== Constants.KEYS.P) {
+            event.preventDefault();
+            return false;
+        }
+
         switch(event.which) {
+            case Constants.KEYS.P:
+                this.togglePause();
+                break;
             case Constants.KEYS.LEFT:
                 this.skier.keyLeft();
                 event.preventDefault();
