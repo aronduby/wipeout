@@ -66,12 +66,12 @@ export class Jumping extends BaseState {
 
     down() {
         this.activeTrick = {
-            0: () => this.skier.updateAsset(Constants.SKIER_JUMP_5),
-            10: () => this.skier.updateAsset(Constants.SKIER_JUMP_4),
-            20: () => this.skier.updateAsset(Constants.SKIER_JUMP_3),
-            30: () => this.skier.updateAsset(Constants.SKIER_JUMP_2),
+            0: () => this.skier.updateAsset(Constants.SKIER_JUMP_4),
+            10: () => this.skier.updateAsset(Constants.SKIER_JUMP_3),
+            20: () => this.skier.updateAsset(Constants.SKIER_JUMP_2),
+            30: () => this.skier.updateAsset(Constants.SKIER_JUMP_1),
             40: () => {
-                this.skier.updateAsset(Constants.SKIER_JUMP_1);
+                this.skier.updateAsset(Constants.SKIER_JUMP_5);
                 this.activeTrick = null;
             },
         }
