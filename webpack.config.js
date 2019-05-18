@@ -1,5 +1,6 @@
 const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin')
+const htmlWebpackPlugin = require('html-webpack-plugin');
+const fs = require('fs');
 require("@babel/register");
 
 // Webpack Configuration
@@ -17,7 +18,12 @@ const config = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: ['babel-loader'],
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        ...JSON.parse(fs.readFileSync(path.resolve(__dirname, '.babelrc')))
+                    }
+                }],
             },
             {
                 test: /\.css$/,
@@ -29,6 +35,8 @@ const config = {
             }
         ]
     },
+
+    devtool: 'source-map',
 
     plugins: [
         new htmlWebpackPlugin({
