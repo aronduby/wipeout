@@ -6,6 +6,7 @@ import { Jumping } from "./SkierStates/Jumping";
 import { Moving } from "./SkierStates/Moving";
 import { Standing } from "./SkierStates/Standing";
 import { Ramping } from "./SkierStates/Ramping";
+import { Caught } from "./SkierStates/Caught";
 
 export class Skier extends Entity {
     assetName = Constants.SKIER_DOWN;
@@ -21,7 +22,8 @@ export class Skier extends Entity {
             [Constants.SKIER_STATES.JUMPING]: new Jumping(this),
             [Constants.SKIER_STATES.MOVING]: new Moving(this),
             [Constants.SKIER_STATES.RAMPING]: new Ramping(this),
-            [Constants.SKIER_STATES.STANDING]: new Standing(this)
+            [Constants.SKIER_STATES.STANDING]: new Standing(this),
+            [Constants.SKIER_STATES.CAUGHT]: new Caught(this)
         };
 
         this.setState(Constants.SKIER_STATES.STANDING);

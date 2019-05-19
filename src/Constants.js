@@ -2,7 +2,7 @@ export const GAME_WIDTH = window.innerWidth;
 export const GAME_HEIGHT = window.innerHeight;
 
 export const PAUSED_CLASS = 'paused';
-
+export const BLANK = 'blank';
 export const SKIER_CRASH = 'skierCrash';
 export const SKIER_LEFT = 'skierLeft';
 export const SKIER_LEFTDOWN = 'skierLeftDown';
@@ -20,15 +20,32 @@ export const ROCK1 = 'rock1';
 export const ROCK2 = 'rock2';
 export const RAMP = 'ramp';
 export const PAUSE_MUSIC = 'pauseMusic';
+export const RHINO_DEFAULT = 'rhinoDefault';
+export const RHINO_RUN_LEFT = 'rhinoRunLeft';
+export const RHINO_RUN_LEFT_2 = 'rhinoRunLeft2';
+export const RHINO_RUN_RIGHT = 'rhinoRunRight';
+export const RHINO_RUN_RIGHT_2 = 'rhinoRunRight2';
+export const RHINO_LIFT = 'rhinoLeft';
+export const RHINO_LIFT_MOUTH_OPEN = 'rhinoLiftMouthOpen';
+export const RHINO_LIFT_EAT_1 = 'rhinoLiftEat1';
+export const RHINO_LIFT_EAT_2 = 'rhinoLiftEat2';
+export const RHINO_CHEER_1 = 'rhinoLiftEat3';
+export const RHINO_CHEER_2 = 'rhinoLiftEat4';
 
 export const SKIER_STARTING_SPEED = 10;
-export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142;
-export const SKIER_JUMP_SPEED_MODIFIER = 1.2;
+export const SKIER_DIAGONAL_SPEED_REDUCER = 1.35;
+export const SKIER_JUMP_SPEED_MODIFIER = 1.1;
+
+export const RHINO_DELAY = 500;
+export const RHINO_SPEED = 9.8;
+export const RHINO_ANIMATION_SPEED = 15;
+export const RHINO_X_BUFFER = 30;
 
 export const JUMP_FRAMES = 20;
 export const RAMP_FRAMES = 60;
 
 export const ASSETS = {
+    [BLANK]: 'img/blank.png',
     [SKIER_CRASH]: 'img/skier_crash.png',
     [SKIER_LEFT]: 'img/skier_left.png',
     [SKIER_LEFTDOWN]: 'img/skier_left_down.png',
@@ -44,7 +61,18 @@ export const ASSETS = {
     [TREE_CLUSTER]: 'img/tree_cluster.png',
     [ROCK1]: 'img/rock_1.png',
     [ROCK2]: 'img/rock_2.png',
-    [RAMP]: 'img/jump_ramp.png'
+    [RAMP]: 'img/jump_ramp.png',
+    [RHINO_DEFAULT]: 'img/rhino_default.png',
+    [RHINO_RUN_LEFT]: 'img/rhino_run_left.png',
+    [RHINO_RUN_LEFT_2]: 'img/rhino_run_left_2.png',
+    [RHINO_RUN_RIGHT]: 'img/rhino_run_right.png',
+    [RHINO_RUN_RIGHT_2]: 'img/rhino_run_right_2.png',
+    [RHINO_LIFT]: 'img/rhino_lift.png',
+    [RHINO_LIFT_MOUTH_OPEN]: 'img/rhino_lift_mouth_open.png',
+    [RHINO_LIFT_EAT_1]: 'img/rhino_lift_eat_1.png',
+    [RHINO_LIFT_EAT_2]: 'img/rhino_lift_eat_2.png',
+    [RHINO_CHEER_1]: 'img/rhino_lift_eat_3.png',
+    [RHINO_CHEER_2]: 'img/rhino_lift_eat_4.png',
 };
 
 export const AUDIO = {
@@ -73,13 +101,22 @@ export const SKIER_STATES = {
     JUMPING: 1,
     MOVING: 2,
     RAMPING: 3,
-    STANDING: 4
+    STANDING: 4,
+    CAUGHT: 5
 };
 
 export const SKIER_STATES_ASSET = {
     [SKIER_STATES.CRASHED]: SKIER_CRASH,
     [SKIER_STATES.JUMPING]: SKIER_JUMP_1,
     [SKIER_STATES.RAMPING]: SKIER_JUMP_1,
+    [SKIER_STATES.CAUGHT]: BLANK
+};
+
+export const RHINO_STATES = {
+    CHASING: 0,
+    CHEERING: 1,
+    EATING: 2,
+    WAITING: 4
 };
 
 export const KEYS = {
