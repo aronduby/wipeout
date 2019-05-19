@@ -46,17 +46,17 @@ export class ObstacleManager {
             return;
         }
 
-        if(gameWindow.left < previousGameWindow.left) {
+        if(!previousGameWindow || gameWindow.left < previousGameWindow.left) {
             this.placeObstacleLeft(gameWindow);
         }
-        else if(gameWindow.left > previousGameWindow.left) {
+        else if(!previousGameWindow || gameWindow.left > previousGameWindow.left) {
             this.placeObstacleRight(gameWindow);
         }
 
-        if(gameWindow.top < previousGameWindow.top) {
+        if(!previousGameWindow || gameWindow.top < previousGameWindow.top) {
             this.placeObstacleTop(gameWindow);
         }
-        else if(gameWindow.top > previousGameWindow.top) {
+        else if(!previousGameWindow || gameWindow.top > previousGameWindow.top) {
             this.placeObstacleBottom(gameWindow);
         }
     };

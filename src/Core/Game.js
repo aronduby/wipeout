@@ -10,6 +10,8 @@ export class Game {
     gameWindow = null;
     paused = false;
 
+    canPlayPauseMusic = false;
+
     constructor() {
         this.assetManager = new AssetManager();
         this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -19,6 +21,10 @@ export class Game {
 
         this.pauseMusic = new Audio(Constants.AUDIO[Constants.PAUSE_MUSIC]);
         this.pauseMusic.loop = true;
+        this.pauseMusic.preload = 'auto';
+        this.pauseMusic.addEventListener('canplay', () => {
+            this.canPlayPauseMusic = true;
+        });
 
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
@@ -46,7 +52,7 @@ export class Game {
             document.body.classList.remove(Constants.PAUSED_CLASS);
             this.run();
         } else {
-            this.pauseMusic.play();
+            this.canPlayPauseMusic && this.pauseMusic.play();
             cancelAnimationFrame(this.frameRequest);
             document.body.classList.add(Constants.PAUSED_CLASS);
         }
