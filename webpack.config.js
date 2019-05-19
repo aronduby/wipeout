@@ -31,11 +31,25 @@ const config = {
             },
             {
                 test: /\.png$/,
-                use: ['file-loader'],
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'img'
+                        },
+                    }
+                ],
             },
             {
                 test: /\.mp3$/,
-                use: ['file-loader']
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'audio'
+                    }
+                }]
             }
         ]
     },
