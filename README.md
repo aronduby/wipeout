@@ -2,7 +2,7 @@
 
 # Wipe Out
 
-[Play online]() or deploy it locally by running:
+[Play online](https://aronduby.github.io/wipeout/) or deploy it locally by running:
 ```
 npm install
 npm run dev
