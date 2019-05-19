@@ -4,7 +4,7 @@
   "description": "Ceros full stack developer code challenge",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./docs",
     "dev": "webpack-dev-server --mode development",
     "build": "npm run clean && webpack --mode production",
     "test": "jest"

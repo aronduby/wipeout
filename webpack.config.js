@@ -9,7 +9,7 @@ const config = {
     entry: ['babel-polyfill', './src/index.js'],
 
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: path.resolve(__dirname, './docs'),
         filename: 'bundle.js',
     },
 
@@ -58,7 +58,7 @@ const config = {
 
     plugins: [
         new htmlWebpackPlugin({
-            title: 'Ceros Ski'
+            title: 'Wipe Out!'
         })
     ],
 };
