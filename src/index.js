@@ -6,5 +6,6 @@ document.addEventListener("DOMContentLoaded",() => {
     skiGame.load().then(() => {
         skiGame.init();
         skiGame.run();
+        skiGame.togglePause();
     });
 });

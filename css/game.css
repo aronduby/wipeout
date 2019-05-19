@@ -7,3 +7,17 @@ body.paused canvas {
     transition: filter .25s ease;
     filter: blur(5px);
 }
+
+body.paused::after {
+    content: '';
+    display: block;
+    width: 600px;
+    height: 472px;
+    background-image: url(../img/wipeout.jpg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px rgba(0,0,0,.8);
+    border-radius: 5px;
+}
